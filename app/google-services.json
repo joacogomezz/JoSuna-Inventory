@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "610691193748",
+    "firebase_url": "https://josuna-inventory-default-rtdb.firebaseio.com",
+    "project_id": "josuna-inventory",
+    "storage_bucket": "josuna-inventory.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610691193748:android:9225b964ded4d3b6abcd81",
+        "android_client_info": {
+          "package_name": "com.joaquin.josuna_inventory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610691193748-dm8lp96cbrr3rdtm9f17h5brd952qqup.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.joaquin.josuna_inventory",
+            "certificate_hash": "538b5c33390d3c6f40e04319f033167285ab3e8e"
+          }
+        },
+        {
+          "client_id": "610691193748-73taiciorurqap6hi7gu5h3hb7i80hjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzbbhC3rWD80MzBhJ-paa0kqqDzyFIiAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610691193748-73taiciorurqap6hi7gu5h3hb7i80hjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
