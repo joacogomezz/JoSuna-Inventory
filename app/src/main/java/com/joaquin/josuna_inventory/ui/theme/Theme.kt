@@ -22,10 +22,33 @@ private val DarkColorScheme = darkColorScheme(
     onError = Color.White
 )
 
+private val LightColorScheme = lightColorScheme(
+    primary = Primary,
+    onPrimary = Color.White,
+    primaryContainer = PrimaryContainerLight,
+    onPrimaryContainer = Primary,
+    secondary = Color(0xFF666666),
+    onSecondary = OnBackgroundLight,
+    background = BackgroundLight,
+    onBackground = OnBackgroundLight,
+    surface = SurfaceLight,
+    onSurface = OnSurfaceLight,
+    surfaceVariant = SurfaceElevatedLight,
+    onSurfaceVariant = OnSurfaceVariantLight,
+    outline = SurfaceBorderLight,
+    error = Error,
+    onError = Color.White
+)
+
 @Composable
-fun JoSunaInventoryTheme(content: @Composable () -> Unit) {
+fun JoSunaInventoryTheme(
+    darkTheme: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+
     MaterialTheme(
-        colorScheme = DarkColorScheme,
+        colorScheme = colorScheme,
         typography = JoSunaTypography,
         content = content
     )

@@ -6,18 +6,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.google.firebase.auth.FirebaseAuth
+import com.joaquin.josuna_inventory.core.theme.ThemeViewModel
 import com.joaquin.josuna_inventory.features.auth.presentation.screens.LoginScreen
 import com.joaquin.josuna_inventory.features.auth.presentation.screens.RegisterScreen
 import com.joaquin.josuna_inventory.features.inventory.presentation.screens.AddProductScreen
 import com.joaquin.josuna_inventory.features.inventory.presentation.screens.CameraScreen
 import com.joaquin.josuna_inventory.features.inventory.presentation.screens.EditProductScreen
 import com.joaquin.josuna_inventory.features.inventory.presentation.screens.InventoryHomeScreen
-import com.joaquin.josuna_inventory.core.hardware.camera.CameraManager
-import com.joaquin.josuna_inventory.features.alerts.presentation.screens.AlertsScreen
 import com.joaquin.josuna_inventory.features.statistics.presentation.screens.StatisticsScreen
+import com.joaquin.josuna_inventory.features.alerts.presentation.screens.AlertsScreen
+import com.joaquin.josuna_inventory.features.profile.presentation.screens.ProfileScreen
+import com.joaquin.josuna_inventory.core.hardware.camera.CameraManager
 
 @Composable
-fun NavigationWrapper(cameraManager: CameraManager) {
+fun NavigationWrapper(
+    cameraManager: CameraManager,
+    themeViewModel: ThemeViewModel
+) {
     val navController = rememberNavController()
     val startDestination = if (FirebaseAuth.getInstance().currentUser != null) InventoryHome else Login
 
@@ -53,11 +58,13 @@ fun NavigationWrapper(cameraManager: CameraManager) {
                 },
                 onStatisticsClick = { navController.navigate(Statistics) },
                 onAlertsClick = { navController.navigate(Alerts) },
+                onProfileClick = { navController.navigate(Profile) },
                 onLogout = {
                     navController.navigate(Login) {
                         popUpTo(InventoryHome) { inclusive = true }
                     }
-                }
+                },
+                themeViewModel = themeViewModel
             )
         }
         composable<AddProduct> { backStackEntry ->
@@ -94,7 +101,19 @@ fun NavigationWrapper(cameraManager: CameraManager) {
             )
         }
         composable<Alerts> {
-            AlertsScreen(onBack = { navController.popBackStack() })
+            AlertsScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable<Profile> {
+            ProfileScreen(
+                onBack = { navController.popBackStack() },
+                onLogout = {
+                    navController.navigate(Login) {
+                        popUpTo(InventoryHome) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }

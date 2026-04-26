@@ -55,19 +55,19 @@ fun StatisticsScreen(
                         Text(
                             text = "Estadísticas",
                             style = MaterialTheme.typography.headlineSmall,
-                            color = OnBackground
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver", tint = OnSurfaceVariant)
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Background)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         },
-        containerColor = Background
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -150,7 +150,7 @@ fun StatisticsScreen(
                 refreshing = uiState.isRefreshing,
                 state = pullRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter),
-                backgroundColor = Surface,
+                backgroundColor = MaterialTheme.colorScheme.surface,
                 contentColor = Primary
             )
         }
@@ -169,7 +169,7 @@ private fun StatCard(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(Surface)
+            .background(MaterialTheme.colorScheme.surface)
     ) {
         if (horizontal) {
             Row(
@@ -187,9 +187,9 @@ private fun StatCard(
                     Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp))
                 }
                 Column {
-                    Text(label, style = MaterialTheme.typography.labelMedium, color = OnSurfaceDim)
+                    Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Text(value, style = MaterialTheme.typography.headlineMedium,
-                        color = OnBackground, fontWeight = FontWeight.Bold)
+                        color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
                 }
             }
         } else {
@@ -206,9 +206,9 @@ private fun StatCard(
                 ) {
                     Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp))
                 }
-                Text(label, style = MaterialTheme.typography.labelMedium, color = OnSurfaceDim)
+                Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(value, style = MaterialTheme.typography.headlineMedium,
-                    color = OnBackground, fontWeight = FontWeight.Bold)
+                    color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -220,7 +220,7 @@ private fun TotalValueCard(totalValue: Double) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(PrimaryDim)
+            .background(MaterialTheme.colorScheme.primaryContainer)
     ) {
         Row(
             modifier = Modifier.padding(24.dp),
@@ -267,7 +267,7 @@ private fun InfoCard(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Surface)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(14.dp)
@@ -282,10 +282,10 @@ private fun InfoCard(
             Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(20.dp))
         }
         Column(modifier = Modifier.weight(1f)) {
-            Text(label, style = MaterialTheme.typography.labelMedium, color = OnSurfaceDim)
+            Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(modifier = Modifier.height(2.dp))
             Text(value, style = MaterialTheme.typography.titleMedium,
-                color = OnBackground, fontWeight = FontWeight.SemiBold)
+                color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.SemiBold)
         }
     }
 }

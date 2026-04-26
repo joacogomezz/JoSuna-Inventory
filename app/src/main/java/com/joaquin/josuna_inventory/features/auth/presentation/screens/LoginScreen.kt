@@ -61,14 +61,17 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
                 .background(
-                    Brush.verticalGradient(colors = listOf(PrimaryContainer, Background))
+                    Brush.verticalGradient(colors = listOf(
+                        MaterialTheme.colorScheme.primaryContainer,
+                        MaterialTheme.colorScheme.background
+                    ))
                 )
         )
 
@@ -81,28 +84,28 @@ fun LoginScreen(
             Column(modifier = Modifier.padding(bottom = 48.dp)) {
                 Text("JoSuna", style = MaterialTheme.typography.displayLarge, color = Primary)
                 Text("INVENTORY", style = MaterialTheme.typography.labelMedium,
-                    color = OnSurfaceVariant, letterSpacing = 6.sp)
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, letterSpacing = 6.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Control total de tu almacén.",
-                    style = MaterialTheme.typography.bodyMedium, color = OnSurfaceDim)
+                    style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
-                    .background(Surface)
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Iniciar sesión", style = MaterialTheme.typography.headlineSmall,
-                    color = OnBackground)
+                    color = MaterialTheme.colorScheme.onBackground)
 
                 OutlinedTextField(
                     value = uiState.email,
                     onValueChange = viewModel::onEmailChange,
                     label = { Text("Correo electrónico") },
-                    leadingIcon = { Icon(Icons.Default.Email, null, tint = OnSurfaceVariant) },
+                    leadingIcon = { Icon(Icons.Default.Email, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     singleLine = true,
@@ -114,12 +117,12 @@ fun LoginScreen(
                     value = uiState.password,
                     onValueChange = viewModel::onPasswordChange,
                     label = { Text("Contraseña") },
-                    leadingIcon = { Icon(Icons.Default.Lock, null, tint = OnSurfaceVariant) },
+                    leadingIcon = { Icon(Icons.Default.Lock, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                null, tint = OnSurfaceVariant
+                                null, tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     },
@@ -158,7 +161,7 @@ fun LoginScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     HorizontalDivider(modifier = Modifier.weight(1f), color = SurfaceBorder)
-                    Text("  o  ", style = MaterialTheme.typography.labelMedium, color = OnSurfaceDim)
+                    Text("  o  ", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     HorizontalDivider(modifier = Modifier.weight(1f), color = SurfaceBorder)
                 }
 
@@ -169,7 +172,7 @@ fun LoginScreen(
                     border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = SurfaceElevated,
-                        contentColor = OnBackground
+                        contentColor = MaterialTheme.colorScheme.onBackground
                     ),
                     enabled = !uiState.isLoading
                 ) {
@@ -177,14 +180,14 @@ fun LoginScreen(
                         color = Primary, fontWeight = FontWeight.ExtraBold)
                     Spacer(modifier = Modifier.width(10.dp))
                     Text("Continuar con Google", style = MaterialTheme.typography.labelLarge,
-                        color = OnBackground)
+                        color = MaterialTheme.colorScheme.onBackground)
                 }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
             TextButton(onClick = onNavigateToRegister, modifier = Modifier.fillMaxWidth()) {
-                Text("¿No tienes cuenta? ", color = OnSurfaceVariant,
+                Text("¿No tienes cuenta? ", color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium)
                 Text("Regístrate", color = Primary, style = MaterialTheme.typography.bodyMedium)
             }
@@ -195,12 +198,12 @@ fun LoginScreen(
 @Composable
 fun outlinedTextFieldColors() = OutlinedTextFieldDefaults.colors(
     focusedBorderColor = Primary,
-    unfocusedBorderColor = SurfaceBorder,
+    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
     focusedLabelColor = Primary,
-    unfocusedLabelColor = OnSurfaceVariant,
-    focusedTextColor = OnBackground,
-    unfocusedTextColor = OnSurface,
+    unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    focusedTextColor = MaterialTheme.colorScheme.onBackground,
+    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
     cursorColor = Primary,
-    focusedContainerColor = SurfaceElevated,
-    unfocusedContainerColor = SurfaceElevated
+    focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+    unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
 )

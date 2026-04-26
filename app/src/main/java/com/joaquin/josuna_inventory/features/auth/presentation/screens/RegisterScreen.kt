@@ -39,13 +39,16 @@ fun RegisterScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp)
-                .background(Brush.verticalGradient(listOf(PrimaryContainer, Background)))
+                .background(Brush.verticalGradient(listOf(
+                    MaterialTheme.colorScheme.primaryContainer,
+                    MaterialTheme.colorScheme.background
+                )))
         )
 
         Column(
@@ -58,13 +61,13 @@ fun RegisterScreen(
                 Text(
                     text = "Crear cuenta",
                     style = MaterialTheme.typography.headlineLarge,
-                    color = OnBackground
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Únete a JoSuna Inventory",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = OnSurfaceDim
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
@@ -72,7 +75,7 @@ fun RegisterScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
-                    .background(Surface)
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(24.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
@@ -80,7 +83,7 @@ fun RegisterScreen(
                     value = uiState.name,
                     onValueChange = viewModel::onNameChange,
                     label = { Text("Nombre completo") },
-                    leadingIcon = { Icon(Icons.Default.Person, null, tint = OnSurfaceVariant) },
+                    leadingIcon = { Icon(Icons.Default.Person, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     shape = RoundedCornerShape(12.dp),
@@ -91,7 +94,7 @@ fun RegisterScreen(
                     value = uiState.email,
                     onValueChange = viewModel::onEmailChange,
                     label = { Text("Correo electrónico") },
-                    leadingIcon = { Icon(Icons.Default.Email, null, tint = OnSurfaceVariant) },
+                    leadingIcon = { Icon(Icons.Default.Email, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     singleLine = true,
@@ -103,12 +106,12 @@ fun RegisterScreen(
                     value = uiState.password,
                     onValueChange = viewModel::onPasswordChange,
                     label = { Text("Contraseña") },
-                    leadingIcon = { Icon(Icons.Default.Lock, null, tint = OnSurfaceVariant) },
+                    leadingIcon = { Icon(Icons.Default.Lock, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                null, tint = OnSurfaceVariant
+                                null, tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     },
@@ -144,9 +147,10 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             TextButton(onClick = onNavigateToLogin, modifier = Modifier.fillMaxWidth()) {
-                Text("¿Ya tienes cuenta? ", color = OnSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
+                Text("¿Ya tienes cuenta? ", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Text("Inicia sesión", color = Primary, style = MaterialTheme.typography.bodyMedium)
             }
         }
     }
 }
+

@@ -70,14 +70,21 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material.pullrefresh)
+    implementation(libs.androidx.datastore)
 
     // Hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
+    // WorkManager
+    implementation(libs.androidx.work.runtime)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
+
     // Firebase
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
     implementation(libs.google.play.services.auth)

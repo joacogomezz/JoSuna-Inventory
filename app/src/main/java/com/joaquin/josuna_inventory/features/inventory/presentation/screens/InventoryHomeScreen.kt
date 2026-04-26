@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -37,7 +39,10 @@ import com.joaquin.josuna_inventory.features.alerts.presentation.viewmodels.Aler
 import com.joaquin.josuna_inventory.features.inventory.domain.entities.Product
 import com.joaquin.josuna_inventory.features.inventory.presentation.components.ProductCard
 import com.joaquin.josuna_inventory.features.inventory.presentation.viewmodels.InventoryViewModel
+import com.joaquin.josuna_inventory.core.theme.ThemeViewModel
 import com.joaquin.josuna_inventory.ui.theme.*
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
@@ -46,11 +51,15 @@ fun InventoryHomeScreen(
     onProductClick: (String) -> Unit,
     onStatisticsClick: () -> Unit,
     onAlertsClick: () -> Unit,
+    onProfileClick: () -> Unit,
     onLogout: () -> Unit = {},
+    themeViewModel: ThemeViewModel = hiltViewModel(),
     viewModel: InventoryViewModel = hiltViewModel(),
     alertsViewModel: AlertsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isDarkMode by themeViewModel.isDarkMode.collectAsStateWithLifecycle()
+
     var selectedProduct by remember { mutableStateOf<Product?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -84,7 +93,7 @@ fun InventoryHomeScreen(
         ModalBottomSheet(
             onDismissRequest = { selectedProduct = null },
             sheetState = sheetState,
-            containerColor = Surface
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
             ProductDetailSheet(
                 product = selectedProduct!!,
@@ -112,11 +121,20 @@ fun InventoryHomeScreen(
                         Text(
                             text = "Inventario",
                             style = MaterialTheme.typography.headlineSmall,
-                            color = OnBackground
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 },
                 actions = {
+                    // Toggle dark/light mode
+                    IconButton(onClick = { themeViewModel.toggleTheme() }) {
+                        Icon(
+                            imageVector = if (isDarkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
+                            contentDescription = if (isDarkMode) "Modo claro" else "Modo oscuro",
+                            tint = OnSurfaceVariant
+                        )
+                    }
+
                     // Badge de alertas
                     val alertsUiState by alertsViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -140,11 +158,11 @@ fun InventoryHomeScreen(
                     IconButton(onClick = onStatisticsClick) {
                         Icon(Icons.Default.BarChart, contentDescription = "Estadísticas", tint = OnSurfaceVariant)
                     }
-                    IconButton(onClick = { viewModel.logout(); onLogout() }) {
-                        Icon(Icons.Default.Logout, contentDescription = "Salir", tint = OnSurfaceVariant)
+                    IconButton(onClick = onProfileClick) {
+                        Icon(Icons.Default.Person, contentDescription = "Perfil", tint = OnSurfaceVariant)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Background)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         },
         floatingActionButton = {
@@ -157,7 +175,7 @@ fun InventoryHomeScreen(
                 Icon(Icons.Default.Add, contentDescription = "Agregar", modifier = Modifier.size(28.dp))
             }
         },
-        containerColor = Background
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -194,12 +212,12 @@ fun InventoryHomeScreen(
                     shape = RoundedCornerShape(14.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Primary,
-                        unfocusedBorderColor = SurfaceBorder,
-                        focusedTextColor = OnBackground,
-                        unfocusedTextColor = OnSurface,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                         cursorColor = Primary,
-                        focusedContainerColor = Surface,
-                        unfocusedContainerColor = Surface
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface
                     )
                 )
 
@@ -228,12 +246,12 @@ fun InventoryHomeScreen(
                                     Icons.Default.Search,
                                     contentDescription = null,
                                     modifier = Modifier.size(48.dp),
-                                    tint = OnSurfaceDim
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
                                     "Sin resultados para \"${uiState.searchQuery}\"",
-                                    color = OnSurfaceVariant,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -246,14 +264,14 @@ fun InventoryHomeScreen(
                                     Icons.Default.Inventory2,
                                     contentDescription = null,
                                     modifier = Modifier.size(64.dp),
-                                    tint = OnSurfaceDim
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Text("No hay productos aún", style = MaterialTheme.typography.titleMedium,
-                                    color = OnSurfaceVariant)
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text("Toca + para agregar uno", style = MaterialTheme.typography.bodyMedium,
-                                    color = OnSurfaceDim)
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                     }
@@ -276,7 +294,7 @@ fun InventoryHomeScreen(
                 refreshing = uiState.isRefreshing,
                 state = pullRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter),
-                backgroundColor = Surface,
+                backgroundColor = MaterialTheme.colorScheme.surface,
                 contentColor = Primary
             )
         }
@@ -292,7 +310,7 @@ private fun ProductDetailSheet(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Surface)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(horizontal = 24.dp)
             .padding(bottom = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -303,7 +321,7 @@ private fun ProductDetailSheet(
                 .fillMaxWidth()
                 .height(200.dp)
                 .clip(RoundedCornerShape(16.dp))
-                .background(SurfaceElevated),
+                .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
             if (product.photoPath.isNotEmpty()) {
@@ -318,7 +336,7 @@ private fun ProductDetailSheet(
                     Icons.Default.Inventory2,
                     contentDescription = null,
                     modifier = Modifier.size(64.dp),
-                    tint = OnSurfaceDim
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -328,7 +346,7 @@ private fun ProductDetailSheet(
         Text(
             text = product.name,
             style = MaterialTheme.typography.headlineMedium,
-            color = OnBackground,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
 
@@ -339,12 +357,12 @@ private fun ProductDetailSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(14.dp))
-                .background(SurfaceElevated)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
                 .padding(vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("PRECIO", style = MaterialTheme.typography.labelMedium, color = OnSurfaceDim)
+                Text("PRECIO", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     "$${product.price}",
@@ -357,15 +375,15 @@ private fun ProductDetailSheet(
                 modifier = Modifier
                     .width(1.dp)
                     .height(40.dp)
-                    .background(SurfaceBorder)
+                    .background(MaterialTheme.colorScheme.outline)
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("STOCK", style = MaterialTheme.typography.labelMedium, color = OnSurfaceDim)
+                Text("STOCK", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     "${product.quantity}",
                     style = MaterialTheme.typography.titleLarge,
-                    color = OnBackground,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
                 )
             }

@@ -24,6 +24,10 @@ class InventoryRepositoryImpl @Inject constructor(
         return productDao.getAllProducts().map { list -> list.map { it.toDomain() } }
     }
 
+    override suspend fun getLocalProducts(): List<Product> {
+        return productDao.getAllProductsOnce().map { it.toDomain() }
+    }
+
     override suspend fun syncProducts() {
         try {
             val uid = auth.currentUser?.uid ?: return

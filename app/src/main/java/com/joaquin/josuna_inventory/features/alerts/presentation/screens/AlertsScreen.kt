@@ -48,19 +48,19 @@ fun AlertsScreen(
                         Text(
                             text = "Alertas",
                             style = MaterialTheme.typography.headlineSmall,
-                            color = OnBackground
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver", tint = OnSurfaceVariant)
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Background)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         },
-        containerColor = Background
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
 
         when {
@@ -88,14 +88,14 @@ fun AlertsScreen(
                         Text(
                             "¡Todo en orden!",
                             style = MaterialTheme.typography.headlineSmall,
-                            color = OnBackground,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             "Ningún producto con stock bajo",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = OnSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -117,7 +117,7 @@ fun AlertsScreen(
                             .clip(RoundedCornerShape(14.dp))
                             .background(
                                 if (uiState.criticalCount > 0)
-                                    Error.copy(alpha = 0.15f)
+                                    MaterialTheme.colorScheme.error.copy(alpha = 0.15f)
                                 else
                                     Warning.copy(alpha = 0.15f)
                             )
@@ -129,21 +129,21 @@ fun AlertsScreen(
                             if (uiState.criticalCount > 0) Icons.Default.Error
                             else Icons.Default.Warning,
                             contentDescription = null,
-                            tint = if (uiState.criticalCount > 0) Error else Warning,
+                            tint = if (uiState.criticalCount > 0) MaterialTheme.colorScheme.error else Warning,
                             modifier = Modifier.size(28.dp)
                         )
                         Column {
                             Text(
                                 text = "${uiState.alertCount} producto(s) con stock bajo",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = OnBackground,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.SemiBold
                             )
                             if (uiState.criticalCount > 0) {
                                 Text(
                                     text = "${uiState.criticalCount} sin stock (agotado)",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = Error
+                                    color = MaterialTheme.colorScheme.error
                                 )
                             }
                         }
@@ -167,13 +167,13 @@ fun AlertsScreen(
 
 @Composable
 private fun AlertCard(alert: LowStockAlert) {
-    val accentColor = if (alert.isCritical) Error else Warning
+    val accentColor = if (alert.isCritical) MaterialTheme.colorScheme.error else Warning
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Surface)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(14.dp)
@@ -198,7 +198,7 @@ private fun AlertCard(alert: LowStockAlert) {
             Text(
                 text = alert.productName,
                 style = MaterialTheme.typography.titleMedium,
-                color = OnBackground,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(2.dp))
@@ -206,7 +206,7 @@ private fun AlertCard(alert: LowStockAlert) {
                 text = if (alert.isCritical) "Sin stock — agotado"
                        else "Stock bajo — límite: ${alert.threshold}",
                 style = MaterialTheme.typography.bodyMedium,
-                color = OnSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
 
@@ -226,4 +226,3 @@ private fun AlertCard(alert: LowStockAlert) {
         }
     }
 }
-

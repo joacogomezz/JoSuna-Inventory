@@ -21,6 +21,9 @@ object Statistics
 object Alerts
 
 @Serializable
+object Profile
+
+@Serializable
 data class EditProduct(val productId: String)
 
 @Serializable

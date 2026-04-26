@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -20,15 +21,26 @@ class ThemePreferences @Inject constructor(
 ) {
     companion object {
         val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
+        val PROFILE_PHOTO_KEY = stringPreferencesKey("profile_photo")
     }
 
     val isDarkMode: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[DARK_MODE_KEY] ?: true // dark mode por defecto
     }
 
+    val profilePhotoUri: Flow<String> = context.dataStore.data.map { preferences ->
+        preferences[PROFILE_PHOTO_KEY] ?: ""
+    }
+
     suspend fun setDarkMode(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[DARK_MODE_KEY] = enabled
+        }
+    }
+
+    suspend fun setProfilePhoto(uri: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PROFILE_PHOTO_KEY] = uri
         }
     }
 }

@@ -58,10 +58,10 @@ fun CameraScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Tomar Foto") },
+                title = { Text("Tomar Foto", color = MaterialTheme.colorScheme.onBackground) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Regresar")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Regresar", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 },
                 actions = {
@@ -74,13 +74,15 @@ fun CameraScreen(
                                               else Icons.Default.FlashOff,
                                 contentDescription = "Flash",
                                 tint = if (isFlashOn) Color.Yellow
-                                       else MaterialTheme.colorScheme.onSurface
+                                       else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -95,7 +97,8 @@ fun CameraScreen(
                 ) {
                     Text(
                         text = "Se necesita permiso de cámara",
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(onClick = {

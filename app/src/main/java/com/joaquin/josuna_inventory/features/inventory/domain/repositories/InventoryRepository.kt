@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository {
     fun getProducts(): Flow<List<Product>>
+    suspend fun getLocalProducts(): List<Product>
     suspend fun syncProducts()
     suspend fun addProduct(product: Product)
     suspend fun updateProduct(product: Product)
     suspend fun deleteProduct(id: String)
 }
-
